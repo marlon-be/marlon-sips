@@ -44,10 +44,11 @@ abstract class OfficeRequest
         return $this->sipsUri;
     }
 
-    public function setSipsUri($sipsUri)
+    public function setBaseUrl($baseUrl)
     {
-        $this->validateUri($sipsUri . $this->getMethod());
-        $this->sipsUri = $sipsUri;
+        $uri = $baseUrl . $this->getMethod();
+        $this->validateUri($uri);
+        $this->sipsUri = $uri;
     }
 
     /** @return string */
@@ -73,7 +74,7 @@ abstract class OfficeRequest
 
     protected function validateTransactionReference($transactionReference)
     {
-        if(preg_match('/[^a-zA-Z0-9_-.]/', $transactionReference)) {
+        if(preg_match('/[^a-zA-Z0-9_.-]/', $transactionReference)) {
             throw new InvalidArgumentException("TransactionReferences cannot contain special characters");
         }
     }
@@ -82,13 +83,6 @@ abstract class OfficeRequest
     {
         if(!array_key_exists(strtoupper($currency), SipsCurrency::getCurrencies())) {
             throw new InvalidArgumentException("Unknown currency");
-        }
-    }
-
-    protected function validateDateTime($dateTime)
-    {
-        if (!\DateTime::createFromFormat('Y#m#d H#i#s', $dateTime)) {
-            throw new InvalidArgumentException(sprintf('"%s" is not a valid date-time, should be in format yyyy-mm-dd hh:mm:ss'));
         }
     }
 
@@ -127,10 +121,23 @@ abstract class OfficeRequest
         return $this->parameters;
     }
 
+    public function getSignedParameters()
+    {
+        $this->validate();
+        $parameters = $this->parameters;
+        $parameters['seal'] = $this->getShaSign();
+
+        return $parameters;
+    }
+
     public function validate()
     {
         foreach($this->getRequiredFields($this->getFields()) as $field => $isRequired) {
-            if(empty($this->parameters[ $field ])) {
+            if(
+                !isset($this->parameters[ $field ]) ||
+                $this->parameters[ $field ] === null ||
+                $this->parameters[ $field ] === ''
+            ) {
                 throw new RuntimeException($field . " can not be empty");
             }
         }
@@ -211,7 +218,7 @@ abstract class OfficeRequest
     {
         if(substr($method, 0, 3) == 'set') {
             $field = lcfirst(substr($method, 3));
-            if (array_key_exists($this->getMethod(), $field)) {
+            if (array_key_exists($field, $this->getFields())) {
                 $this->parameters[$field] = $args[0];
                 return;
             }

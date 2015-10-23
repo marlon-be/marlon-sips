@@ -35,6 +35,7 @@ class DuplicateRequest extends OfficeRequest
             'fromMerchantId'                => true,
             'fromTransactionReference'      => true,
             'interfaceVersion'              => true,
+            'keyVersion'                    => true,
             'merchantId'                    => true,
             'merchantTransactionDateTime'   => true,
             'orderChannel'                  => true,
@@ -81,7 +82,7 @@ class DuplicateRequest extends OfficeRequest
         $this->setParameter('fromTransactionReference', $fromTransactionReference);
     }
 
-    public function setCurrencyCode($currency)
+    public function setCurrency($currency)
     {
         $this->validateCurrency($currency);
         $this->setParameter('currencyCode', SipsCurrency::convertCurrencyToSipsCurrencyCode($currency));
@@ -107,10 +108,9 @@ class DuplicateRequest extends OfficeRequest
         $this->setParameter('interfaceVersion', $interfaceVersion);
     }
 
-    public function setMerchantTransactionDateTime($merchantTransactionDateTime)
+    public function setMerchantTransactionDateTime(\DateTime $merchantTransactionDateTime)
     {
-        $this->validateDateTime($merchantTransactionDateTime);
-        $this->setParameter('merchantTransactionDateTime', $merchantTransactionDateTime);
+        $this->setParameter('merchantTransactionDateTime', $merchantTransactionDateTime->format(\DateTime::ISO8601));
     }
 
     public function setOrderChannel($orderChannel)
