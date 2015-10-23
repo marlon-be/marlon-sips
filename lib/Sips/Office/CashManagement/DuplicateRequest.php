@@ -37,7 +37,7 @@ class DuplicateRequest extends OfficeRequest
             'interfaceVersion'              => true,
             'keyVersion'                    => true,
             'merchantId'                    => true,
-            'merchantTransactionDateTime'   => true,
+            'merchantTransactionDateTime'   => false,
             'orderChannel'                  => true,
             'orderId'                       => false,
             'returnContext'                 => true,
