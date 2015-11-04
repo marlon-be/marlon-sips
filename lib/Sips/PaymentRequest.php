@@ -57,7 +57,7 @@ class PaymentRequest
         'customerContact', 'customerContact.email', 'customerContact.firstname',
         'customerContact.gender', 'customerContact.lastname', 'customerContact.mobile',
         'customerContact.phone', 'customerContact.title', 'expirationDate', 'automaticResponseUrl',
-        'templateName','paymentMeanBrandList', 'paymentPattern'
+        'templateName','paymentMeanBrandList', 'paymentPattern', 'paypageData.bypassReceiptPage'
     );
 
     private $requiredFields = array(
@@ -211,6 +211,11 @@ class PaymentRequest
     public function setBillingContactLastname($lastname)
     {
         $this->parameters['billingContact.lastname'] = str_replace(array("'", '"'), '', Normalizer::normalize($lastname)); // replace quotes
+    }
+
+    public function bypassReceiptPage()
+    {
+        $this->parameters['paypageData.bypassReceiptPage'] = "true";
     }
 
     public function __call($method, $args)
