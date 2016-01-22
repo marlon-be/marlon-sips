@@ -57,7 +57,7 @@ class PaymentRequest
         'customerContact', 'customerContact.email', 'customerContact.firstname',
         'customerContact.gender', 'customerContact.lastname', 'customerContact.mobile',
         'customerContact.phone', 'customerContact.title', 'expirationDate', 'automaticResponseUrl',
-        'templateName','paymentMeanBrandList', 'paymentPattern', 'paypageData.bypassReceiptPage'
+        'templateName','paymentMeanBrandList', 'paymentPattern', 'paypageData.bypassReceiptPage', 'statementReference'
     );
 
     private $requiredFields = array(
