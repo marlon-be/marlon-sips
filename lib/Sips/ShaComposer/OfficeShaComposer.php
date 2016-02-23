@@ -11,6 +11,8 @@ class OfficeShaComposer implements ShaComposer
      */
     private $passphrase;
 
+    private $ignoredParameters = array('keyVersion', 'seal');
+
     /**
      * @param \Sips\Passphrase $passphrase
      */
@@ -21,8 +23,10 @@ class OfficeShaComposer implements ShaComposer
 
     public function compose(array $parameters)
     {
-        if (isset($parameters['keyVersion'])) {
-            unset($parameters['keyVersion']);
+        foreach ($this->ignoredParameters as $param) {
+            if (isset($parameters[$param])) {
+                unset($parameters[$param]);
+            }
         }
 
         ksort($parameters);
