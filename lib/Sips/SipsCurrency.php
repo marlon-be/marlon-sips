@@ -12,7 +12,7 @@ class SipsCurrency {
         'AUD' => '036', 'NZD' => '554', 'NOK' => '578', 'BRC' => '986',
         'ARP' => '032', 'KHR' => '116', 'TWD' => '901', 'SEK' => '752',
         'DKK' => '208', 'KRW' => '410', 'SGD' => '702', 'XPF' => '953',
-        'XOF' => '952'
+        'XOF' => '952', 'PLN' => '985',
     );
 
     public static function convertCurrencyToSipsCurrencyCode($currency)
