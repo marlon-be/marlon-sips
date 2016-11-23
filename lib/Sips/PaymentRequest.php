@@ -165,34 +165,38 @@ class PaymentRequest
 
     public function setBillingAddressStreet($street)
     {
+        $street = Normalizer::normalize($street);
         if(strlen($street) > 35) {
             throw new InvalidArgumentException("street is too long");
         }
-        $this->parameters['billingAddress.street'] = Normalizer::normalize($street);
+        $this->parameters['billingAddress.street'] = $street;
     }
 
     public function setBillingAddressStreetNumber($nr)
     {
+        $nr = Normalizer::normalize($nr);
         if(strlen($nr) > 10) {
             throw new InvalidArgumentException("streetNumber is too long");
         }
-        $this->parameters['billingAddress.streetNumber'] = Normalizer::normalize($nr);
+        $this->parameters['billingAddress.streetNumber'] = $nr;
     }
 
     public function setBillingAddressZipCode($zipCode)
     {
+        $zipCode = Normalizer::normalize($zipCode);
         if(strlen($zipCode) > 10) {
             throw new InvalidArgumentException("zipCode is too long");
         }
-        $this->parameters['billingAddress.zipCode'] = Normalizer::normalize($zipCode);
+        $this->parameters['billingAddress.zipCode'] = $zipCode;
     }
 
     public function setBillingAddressCity($city)
     {
+        $city = Normalizer::normalize($city);
         if(strlen($city) > 25) {
             throw new InvalidArgumentException("city is too long");
         }
-        $this->parameters['billingAddress.city'] = Normalizer::normalize($city);
+        $this->parameters['billingAddress.city'] = $city;
     }
 
     public function setBillingContactPhone($phone)

@@ -21,6 +21,7 @@ class Normalizer {
 
     public static function normalize($string)
     {
+        $string = \Transliterator::create('Any-Latin; Latin-ASCII')->transliterate($string);
         return str_replace(array_keys(self::$invalid), array_values(self::$invalid), $string);
     }
 }
