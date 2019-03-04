@@ -2,9 +2,8 @@
 
 namespace Sips\Tests;
 
-use Sips\ShaComposer\AllParametersShaComposer;
-use Sips\Tests\ShaComposer\FakeShaComposer;
 use Sips\PaymentRequest;
+use Sips\Tests\ShaComposer\FakeShaComposer;
 
 class PaymentRequestTest extends \TestCase
 {
@@ -14,14 +13,14 @@ class PaymentRequestTest extends \TestCase
         $paymentRequest = $this->provideMinimalPaymentRequest();
         $paymentRequest->validate();
     }
-    
+
     /** @test */
     public function IsValidWhenAllFieldsAreFilledIn()
     {
         $paymentRequest = $this->provideCompletePaymentRequest();
         $paymentRequest->validate();
     }
-    
+
     /**
      * @test
      * @expectedException \RuntimeException
@@ -31,7 +30,7 @@ class PaymentRequestTest extends \TestCase
         $paymentRequest = new PaymentRequest(new FakeShaComposer);
         $paymentRequest->validate();
     }
-    
+
     /** @test */
     public function UnimportantParamsUseMagicSetters()
     {
@@ -39,7 +38,7 @@ class PaymentRequestTest extends \TestCase
         $paymentRequest->setTemplateName('Marlon Sips Test');
         $this->assertEquals('Marlon Sips Test', $paymentRequest->getTemplateName());
     }
-    
+
     /**
      * @test
      * @dataProvider provideBadParameters
@@ -50,7 +49,7 @@ class PaymentRequestTest extends \TestCase
         $paymentRequest = new PaymentRequest(new FakeShaComposer);
         $paymentRequest->$method($value);
     }
-    
+
     /**
      * @test
      * @expectedException \BadMethodCallException
@@ -60,11 +59,11 @@ class PaymentRequestTest extends \TestCase
         $paymentRequest = new PaymentRequest(new FakeShaComposer);
         $paymentRequest->getFoobar();
     }
-    
+
     public function provideBadParameters()
     {
         $notAUri = 'http://not a uri';
-        
+
         return array(
             array('setAmount', 10.50),
             array('setAmount', -1),
@@ -315,5 +314,5 @@ class PaymentRequestTest extends \TestCase
     public function CreateFromArrayInvalid()
     {
         $paymentRequest = PaymentRequest::createFromArray(new FakeShaComposer, array('language'=>'West-Vlaams'));
-    }            
+    }
 }

@@ -2,8 +2,6 @@
 
 namespace Sips\Tests;
 
-use Sips\Tests\ShaComposer\FakeShaComposer;
-use Sips\ShaComposer\ShaComposer;
 use Sips\PaymentResponse;
 
 class PaymentResponseTest extends \TestCase
@@ -14,7 +12,7 @@ class PaymentResponseTest extends \TestCase
     public function CanBeVerified()
     {
         $aRequest = $this->provideRequest();
-        
+
         $paymentResponse = new PaymentResponse($aRequest);
         $shaComposer = $this->getMock('Sips\ShaComposer\ShaComposer');
 
@@ -78,7 +76,7 @@ class PaymentResponseTest extends \TestCase
 
         $this->assertTrue($paymentResponse->isValid($shaComposer));
     }
-    
+
     /**
      * @test
      * @expectedException \InvalidArgumentException
@@ -94,7 +92,7 @@ class PaymentResponseTest extends \TestCase
     public function ParametersCanBeRetrieved()
     {
         $aRequest = $this->provideRequest();
-        
+
         $paymentResponse = new PaymentResponse($aRequest);
         $this->assertEquals('009852', $paymentResponse->getParam('authorisationId'));
     }
@@ -204,7 +202,7 @@ class PaymentResponseTest extends \TestCase
     public function ChecksStatus()
     {
         $aRequest = $this->provideRequest();
-        
+
         $paymentResponse = new PaymentResponse($aRequest);
         $this->assertTrue($paymentResponse->isSuccessful());
     }
@@ -215,7 +213,7 @@ class PaymentResponseTest extends \TestCase
     public function AmountIsConvertedToCent()
     {
         $aRequest = $this->provideRequest();
-        
+
         $paymentResponse = new PaymentResponse($aRequest);
         $this->assertEquals(3, $paymentResponse->getParam('amount'));
     }
@@ -240,5 +238,5 @@ class PaymentResponseTest extends \TestCase
         );
     }
 
-    
+
 }
