@@ -10,8 +10,8 @@ use Sips\SipsCurrency;
 
 abstract class OfficeRequest
 {
-    const TEST = 'https://office-server.test.sips-atos.com';
-    const PRODUCTION = 'https://office-server.sips-atos.com';
+    const TEST = 'https://office-server.test.sips-services.com';
+    const PRODUCTION = 'https://office-server.sips-services.com';
 
     /** @var ShaComposer */
     private $shaComposer;
